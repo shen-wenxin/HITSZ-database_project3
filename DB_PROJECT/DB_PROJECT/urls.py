@@ -16,11 +16,15 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from user.views import register,login,index,logout
+from source.views import upload,sourcelist,download
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('register/', register),
     path('login/',login),
     path('logout/',logout),
-    path('index/',index)
+    path('index/',index),
+    path('upload/',upload),
+    path('list/',sourcelist),
+    path('download/<int:id>',download, name='download')
 
 ]

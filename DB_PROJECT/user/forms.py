@@ -11,7 +11,7 @@ class RegisterForm(forms.Form):
         ('Teacher', "老师"),
         ('Student', "学生")
     )
-    user_id = forms.IntegerField(label="学生号/教师员工号",widget=forms.NumberInput(attrs={'size':20}))
+    user_id = forms.CharField(label="学生号/教师员工号",widget=forms.TextInput(attrs={'class': 'form-control'}))
     username = forms.CharField(label="用户名", max_length=128, widget=forms.TextInput(attrs={'class': 'form-control'}))
     password1 = forms.CharField(label="密码", max_length=256, widget=forms.PasswordInput(attrs={'class': 'form-control'}))
     password2 = forms.CharField(label="确认密码", max_length=256, widget=forms.PasswordInput(attrs={'class': 'form-control'}))

@@ -5,7 +5,7 @@ from django.db import models
 # 院系
 class Departments(models.Model):
 
-    ID = models.IntegerField('院系编号', primary_key=True,null=False)
+    ID = models.TextField('院系编号', max_length=20, primary_key=True,null=False)
     name = models.TextField('院系名称',max_length=20,null=False)
     name_leader = models.TextField('院长名字',max_length=10,null=False)
     class Meta:
@@ -21,7 +21,7 @@ class Departments(models.Model):
 # 班级
 class Class(models.Model):
 
-    ID = models.IntegerField('班级编号', primary_key=True,null=False)
+    ID = models.TextField('班级编号', max_length=20, primary_key=True,null=False)
     name = models.TextField('班级名称',max_length=20,null=False)
     departments = models.ForeignKey(Departments,on_delete=models.CASCADE)
     people_nums = models.IntegerField('班级人数',default=0)
@@ -39,7 +39,7 @@ class Class(models.Model):
 # 教师
 class Teacher(models.Model):
 
-    ID = models.IntegerField('教师编号', primary_key=True,null=False)
+    ID = models.TextField('教师编号', max_length=20, primary_key=True,null=False)
     name = models.TextField('教师名称',max_length=20,null=False)
     departments = models.ForeignKey(Departments,on_delete=models.CASCADE)
     job = models.TextField('职位',max_length=10)
@@ -57,7 +57,7 @@ class Teacher(models.Model):
 # 学生
 class Student(models.Model):
     
-    ID = models.IntegerField('学生编号', primary_key=True,null=False)
+    ID = models.TextField('学生编号', max_length=20, primary_key=True,null=False)
     name = models.CharField('学生姓名', max_length=20, null=False)
     ofclass = models.ForeignKey(Class,on_delete=models.CASCADE)
 
@@ -72,7 +72,7 @@ class Student(models.Model):
 
 # 用户-学生
 class UserTeacher(models.Model):
-    user_id = models.IntegerField('用户id', primary_key=True,null=False)
+    user_id = models.TextField('用户id', max_length=20, primary_key=True,null=False)
     identity = models.ForeignKey(Teacher,on_delete=models.CASCADE)
     name = models.TextField('用户姓名', max_length=20, null=False,unique=True)  
     state = models.IntegerField(choices=[(0,'离线'),(1,'在线')],default=0)
@@ -92,7 +92,7 @@ class UserTeacher(models.Model):
 
 # 用户-学生
 class UserStudent(models.Model):
-    user_id = models.IntegerField('用户id', primary_key=True,null=False)
+    user_id = models.TextField('用户id', max_length=20, primary_key=True,null=False)
     identity = models.ForeignKey(Student,on_delete=models.CASCADE)
     name = models.TextField('用户姓名', max_length=20, null=False,unique=True)  
     state = models.IntegerField(choices=[(0,'离线'),(1,'在线')],default=0)

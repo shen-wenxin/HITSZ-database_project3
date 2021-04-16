@@ -19,12 +19,6 @@ def register(request):
             password2 = register_form.cleaned_data['password2']
             email = register_form.cleaned_data['email']
             identity = register_form.cleaned_data['identity']
-            print("[DEBUG][POST][LOGIN][user_id]:{}".format(user_id))
-            print("[DEBUG][POST][LOGIN][username]:{}".format(username))
-            print("[DEBUG][POST][LOGIN][password1]:{}".format(password1))
-            print("[DEBUG][POST][LOGIN][password2]:{}".format(password2))
-            print("[DEBUG][POST][LOGIN][email]:{}".format(email))
-            print("[DEBUG][POST][LOGIN][identity]:{}".format(identity))
             
             if password1 != password2:  # 判断两次密码是否相同
                 message = "两次输入的密码不同！"
@@ -57,8 +51,6 @@ def register(request):
                         new_user.password = password1
                         new_user.email = email
                         new_user.identity = identity
-                        print("[DEBUG][POST][SAVE2DB][ID]:{}".format(new_user.user_id))
-                        print("[DEBUG][POST][SAVE2DB][new_user]:{}".format(new_user))
                         new_user.save()
                         return redirect('/login/')  # 自动跳转到登录页面
 

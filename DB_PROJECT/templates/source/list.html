@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}文件列表{% endblock %}
+{% block css %}<link href="{% static 'css/list.css' %}" rel="stylesheet"/>{% endblock %}
+{% block content %}
+    <div class="container">
+            <h1 class="text-center">资源下载</h1>
+            <table class ="table table-hover">
+                <thead>
+                    <tr>
+                        <th>课程名</th>
+                        <th>资源名</th>
+                        <th>备注</th>
+                        <th>上传者</th>
+                        <th>下载次数</th>
+                        <th>点击下载</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for f in file_list %}
+                    <tr>
+                        <td>{{f.course}}</td>
+                        <td>{{f.filename}}</td>
+                        <td>{{f.remarks}}</td>
+                        <td>{{f.uploader_id}}</td>
+                        <td>{{f.download_times}}</td>
+                        <td>
+                            <ul>
+                                <a class="btn btn-default btn-xs" href="{% url 'download' f.id  %}" role="button">点我</a>
+                            </ul>
+             
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+    </div> 
+{% endblock %}
