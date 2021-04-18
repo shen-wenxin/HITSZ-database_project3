@@ -14,9 +14,10 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path
+from django.urls import path,include
 from user.views import register,login,index,logout
 from source.views import upload,sourcelist,download
+from sendmessage.views import send_message,recieve_message,message_info,delete_message,sended_message,delete_message_send
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('register/', register),
@@ -25,6 +26,14 @@ urlpatterns = [
     path('index/',index),
     path('upload/',upload),
     path('list/',sourcelist),
-    path('download/<int:id>',download, name='download')
+    path('download/<int:id>',download, name='download'),
+    path('send_message/',send_message, name='send_message'),
+    path('recieve_message/',recieve_message, name='recieve_message'),
+    path('message_info/<int:id>',message_info, name='message_info'),
+    path('delete_message/<int:id>',delete_message,name='delete_message'),
+    path('delete_message_send/<int:id>',delete_message_send,name='delete_message_send'),
+    path('sended_message/',sended_message,name='delete_message'),
+    path('course/',include('course.urls'))
 
+    
 ]

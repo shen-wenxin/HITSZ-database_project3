@@ -43,7 +43,7 @@ class Teacher(models.Model):
     name = models.TextField('教师名称',max_length=20,null=False)
     departments = models.ForeignKey(Departments,on_delete=models.CASCADE)
     job = models.TextField('职位',max_length=10)
-
+    course = models.TextField('所教课程', max_length=500,null=False,default=" ")
     class Meta:
         db_table='teacher'
         ordering = ['ID']
@@ -60,7 +60,7 @@ class Student(models.Model):
     ID = models.TextField('学生编号', max_length=20, primary_key=True,null=False)
     name = models.CharField('学生姓名', max_length=20, null=False)
     ofclass = models.ForeignKey(Class,on_delete=models.CASCADE)
-
+    course = models.TextField('所学课程', max_length=500,null=False,default = " ")
     class Meta:
         db_table='student'
         ordering = ['ID']
@@ -79,7 +79,6 @@ class UserTeacher(models.Model):
     password = models.CharField('密码', max_length=256)
     email = models.EmailField('邮箱', unique=True)
     sourse_num = models.IntegerField('已经上传的资源数',default=0)
-
     class Meta:
         db_table = 'UserTeacher'
         ordering = ['user_id']

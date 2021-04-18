@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+
+{% block title %}发送私信{% endblock %}
+{% block content %}
+    <div class="container">
+        <form class='form-send-message' action="/send_message/" method="post">
+
+            {% if message %}
+                <div class="alert alert-warning">{{ message }}</div>
+            {% endif %}
+
+            {% csrf_token %}
+
+            <h2 class="text-center">发送私信<br></h2>
+            <div class="text-right">
+                <a class="btn btn-link" href="/recieve_message/" role="button">返回私信列表<br></a>
+                
+            </div>
+
+            <div class="form-group">
+              {{ new_message.reciever_id.label_tag }}
+              {{ new_message.reciever_id}}
+              </div>
+            <div class="form-group">
+                {{ new_message.theme.label_tag }}
+                {{ new_message.theme}}
+            </div>
+            <div class="form-group" rows="3">
+                {{ new_message.text.label_tag }}
+                {{ new_message.text}}
+            </div>
+            <button type="reset" class="btn btn-default pull-left">重置</button>
+            <button type="submit" class="btn btn-primary pull-right">提交</button>
+
+        </form>
+    </div> <!-- /container -->
+{% endblock %}

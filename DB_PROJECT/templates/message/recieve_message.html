@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}私信列表{% endblock %}
+{% block css %}<link href="{% static 'css/list.css' %}" rel="stylesheet"/>{% endblock %}
+{% block content %}
+    <div class="container">
+            <h1 class="text-center">私信列表<br></h1>
+            <div class="text-right">
+                <a class="btn btn-link" href="/sended_message/" role="button">查看已发送的私信<br><br></a>
+            </div>
+            <table class ="table table-hover">
+                <thead>
+                    <tr>
+                        <th>状态</th>
+                        <th>发送时间</th>
+                        <th>发送者</th>
+                        <th>主题</th>
+                        <th>内容</th>
+                        <th>查看详细内容</th>
+                        <th>删除</th>
+
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for m in msgs_list %}
+                    <tr>
+                        <td>{{m.read}}</td>
+                        <td>{{m.send_time}}</td>
+                        <td>{{m.sender}}</td>
+                        <td>{{m.theme}}</td>
+                        <td>{{m.read}}</td>
+                        <td>
+                            <ul>
+                                <a class="btn btn-success" href="{% url 'message_info' m.id  %}" role="button">点我看看</a>
+                            </ul>
+                        </td>
+                        <td>
+                            <ul>
+                                <a class="btn btn-danger" href="{% url 'delete_message' m.id  %}" role="button">删除</a>
+                            </ul>
+                        </td>
+ 
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+    </div> 
+{% endblock %}
+

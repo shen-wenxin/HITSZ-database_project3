@@ -1,0 +1,51 @@
+{% extends 'course/base.html' %}
+{% load static %}
+{% block title %}我的课程{% endblock %}
+
+{% block content %}
+    <div class="container">
+            <h1 class="text-center">我的课程<br></h1>
+            {% if message %}
+                  <div class="alert alert-warning">{{ message }}</div>
+              {% endif %}
+            <div class="text-right">
+                {% if message_teacher %}
+                <a class="btn btn-link" href="/course/add_course/" role="button">新建课程<br><br></a>
+                {% endif %}
+                <a class="btn btn-link" href="/index/" role="button">返回首页<br><br></a>
+            </div>
+            <table class ="table table-hover">
+                <thead>
+                    <tr>
+                        <th class=text-center>课程编号</th>
+                        <th class=text-center>课程名字</th>
+                        <th class=text-center>任课教师</th>
+                        
+                        <th class=text-center>课程资源</th>
+                        {% if message_teacher %}
+                        <th class=text-center>修改课程</th>
+                        <th class=text-center>退出课程</th>
+                        {% endif %}
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for c in course_info_list %}
+                    <tr>
+                        <td class=text-center>{{c.id}}</td>
+                        <td class=text-center>{{c.name}}</td>
+                        <td class=text-center>{{c.teacher}}</td>
+                        <td class=text-center><a class="btn btn-link" href="{% url 'course_source' c.id  %}" role="button">资源下载<br><br></a></td>
+                        {% if message_teacher %}
+                        <td class=text-center><a class="btn btn-link" href="{% url 'course_deteils' c.id  %}" role="button">课程修改<br><br></a></td>
+                        {% if c.teacher_num != 1 %}
+                        <td class=text-center><a class="btn btn-link" href="{% url 'quit_course' c.id  %}" role="button">退出<br><br></a></td>
+                        {% endif %}
+                        {% endif %}
+                            
+
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+    </div> 
+{% endblock %}

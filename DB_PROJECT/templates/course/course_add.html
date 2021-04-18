@@ -1,0 +1,41 @@
+{% extends 'course/base.html' %}
+{% block title %}新建课程{% endblock %}
+{% block content %}
+    <div class="container">
+        <div class="col-md-4 col-md-offset-4">
+          <form class='form-register' action="/course/add_course/" method="post">
+
+              {% if message %}
+                  <div class="alert alert-warning">{{ message }}</div>
+              {% endif %}
+
+              {% csrf_token %}
+
+              <h2 class="text-center">新建课程<br><br></h2>
+              <div class="text-left">
+
+                <a class="btn btn-link" href="/course/mycourse" role="button">返回课程页<br><br></a>
+            </div>
+              <div class="form-group">
+                {{ course_form.course_id.label_tag }}
+                {{ course_form.course_id}}
+                </div>
+              <div class="form-group">
+                  {{ course_form.name.label_tag }}
+                  {{ course_form.name}}
+              </div>
+              <div class="form-group">
+                  {{ course_form.teacher.label_tag }}
+                  {{ course_form.teacher }}
+              </div>
+              <div class="form-group">
+                  {{ course_form.student.label_tag }}
+                  {{ course_form.student }}
+              </div>
+              <button type="reset" class="btn btn-default pull-left">重置</button>
+              <button type="submit" class="btn btn-primary pull-right">提交</button>
+
+          </form>
+        </div>
+    </div> <!-- /container -->
+{% endblock %}

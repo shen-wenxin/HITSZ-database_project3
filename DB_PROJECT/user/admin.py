@@ -23,15 +23,15 @@ class ClassAdmin(admin.ModelAdmin):
 
 @admin.register(Teacher)
 class TeacherAdmin(admin.ModelAdmin):
-    list_display=('ID','name','departments','job')
-    list_editable=['name','departments','job']
+    list_display=('ID','name','departments','job','course')
+    list_editable=['name','departments','job','course']
     actions_on_top=True
     search_fields=['name']
 
 
 @admin.register(Student)
 class StudentAdmin(admin.ModelAdmin):
-    list_display=('ID','name','ofclass')
+    list_display=('ID','name','ofclass','course')
     list_editable=['name','ofclass']
     actions_on_top=True
     search_fields=['name']

@@ -3,7 +3,8 @@ from .forms import UserForm,RegisterForm
 from . import models
 
 def index(request):
-    pass 
+    # 主页
+    
     return render(request, 'user/index.html') 
 
 def register(request):

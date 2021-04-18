@@ -1,0 +1,44 @@
+{% extends 'course/base.html' %}
+{% load static %}
+{% block title %}文件列表{% endblock %}
+{% block content %}
+    <div class="container">
+            <h1 class="text-center"><br>{{course_name}}资源<br></h1>
+            <div class="text-right">
+
+                <a class="btn btn-link" href="/course/mycourse" role="button">返回课程页<br><br></a>
+            </div>
+
+            {% if not message%}
+            <table class ="table table-hover">
+                <thead>
+                    <tr>
+                        <th class = text-center>上传时间</th>
+                        <th class = text-center>资源名</th>
+                        <th class = text-center>备注</th>
+                        <th class = text-center>上传者</th>
+                        <th class = text-center>文件</th>
+                        <th class = text-center>点击下载</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for f in file_list %}
+                    <tr>
+                        <td class = text-center>{{f.uploade_time}}</td>
+                        <td class = text-center>{{f.filename}}</td>
+                        <td class = text-center>{{f.remarks}}</td>
+                        <td class = text-center>{{f.download_times}}</td>
+                        <td class = text-center>{{f.file}}</td>
+                        <td class = text-center>
+                                <a class="btn  btn-link" href="{% url 'download' f.id  %}" role="button">点我</a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+            {% else %}
+            <h4 class="text-center"><br>{{message}}<br></h4>
+            {% endif %}
+
+                </tbody>
+            </table>
+    </div> 
+{% endblock %}

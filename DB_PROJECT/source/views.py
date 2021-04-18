@@ -66,11 +66,12 @@ def sourcelist(request):
 
 def download(request,id):
     f = models.FileInfo.objects.get(id = id)
+    f.download_times = f.download_times + 1
+    f.save()
     file_path = "media/"+f.file_info.name
     response = FileResponse(open(file_path, 'rb'))
     response['Content-Type'] = 'application/octet-stream'
-    
-    
     return response
+
 
             

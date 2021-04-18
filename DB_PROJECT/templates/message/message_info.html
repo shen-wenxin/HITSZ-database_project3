@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}私信详情{% endblock %}
+{% block css %}<link href="{% static 'css/message_info.css' %}" rel="stylesheet"/>{% endblock %}
+{% block content %}
+    <div class="container">
+        {% if msg_info%}
+        <h2 class = text-center> <br><br>一封来自{{msg_info.sender}}的信 <br></h2> 
+
+        <div class="text-right">
+            <a class="btn btn-link" href="/recieve_message/" role="button">返回私信列表</a>
+            <a class="btn btn-link" href="/send_message/" role="button">回复</a>
+            <a class="btn btn-link" href="{% url 'delete_message'  msg_info.id  %}" role="button">残忍删除</a>
+        </div>
+        {% else %}
+        <h2 class = text-center> <br><br><br><br>这里什么也没有了…… <br><br><br><br></h2>
+        <a class="btn btn-link" href="/recieve_message/" role="button">返回私信列表</a>
+        {% endif%}
+        
+            
+    </div>
+    
+
+    <div class="container">
+       
+        {% if msg_info%}
+        <h4> <br><br>主题：{{msg_info.theme}} <br></h4> 
+        <h4>  <br>内容：{{msg_info.text}} <br></h4> 
+        {% endif%}
+
+    </div> 
+
+
+{% endblock %}
+
+<div class="col-xs-6 col-md-4">
+    
+    
+</div>
