@@ -4,13 +4,13 @@
     {% if request.session.is_login %}
     <h2 class=text-center><br><br><br><br><br><br><br><br>你好,{{ request.session.user_name }}！欢迎回来！<br><br>
         <a class="btn btn-link" href="/course/mycourse" role="button">我的课程<br></a>
-        <a class="btn btn-link" href="/recieve_message/" role="button">资源管理</a>
-        <a class="btn btn-link" href="/recieve_message/" role="button">发送私信</a>
+        <a class="btn btn-link" href="/source/list/" role="button">资源管理</a>
+        <a class="btn btn-link" href="/recieve_message/" role="button">私信管理</a>
     </h2>
         
 
 
     {% else %}
-    <h1>你尚未登录，只能访问公开内容！</h1>
+    <h2 class=text-center><br><br><br><br><br><br><br><br>不知道你是谁哦……<br><br>
     {% endif %}
 {% endblock %}

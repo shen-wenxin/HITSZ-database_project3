@@ -16,7 +16,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path,include
 from user.views import register,login,index,logout
-from source.views import upload,sourcelist,download
+from source.views import upload,sourcelist,download,deletesource
 from sendmessage.views import send_message,recieve_message,message_info,delete_message,sended_message,delete_message_send
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -24,8 +24,10 @@ urlpatterns = [
     path('login/',login),
     path('logout/',logout),
     path('index/',index),
-    path('upload/',upload),
-    path('list/',sourcelist),
+    path('source/',include('source.urls')),
+    path('source/deletesource/<int:id>',deletesource, name='deletesource'),
+
+    
     path('download/<int:id>',download, name='download'),
     path('send_message/',send_message, name='send_message'),
     path('recieve_message/',recieve_message, name='recieve_message'),

@@ -8,7 +8,7 @@ class FileInfo(models.Model):
     file_name = models.TextField('文件名称',max_length=200,null=False)
     remarks = models.TextField('文件备注',max_length=200,null=False)
     upload_time = models.DateTimeField('上传时间',default=timezone.now)
-    uploader_id = models.TextField('上传者编号', max_length=20)
+    uploader_id = models.TextField('上传者', max_length=20)
     download_times = models.IntegerField('下载次数', default=0)
     file_info = models.FileField(upload_to = 'upload/%Y%m%d')
     course = models.ForeignKey(Course,on_delete=models.CASCADE)

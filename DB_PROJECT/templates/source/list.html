@@ -1,10 +1,23 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block title %}文件列表{% endblock %}
-{% block css %}<link href="{% static 'css/list.css' %}" rel="stylesheet"/>{% endblock %}
 {% block content %}
     <div class="container">
-            <h1 class="text-center">资源下载</h1>
+            <h1 class="text-center"><br>资源管理<br></h1>
+
+            <div class="pull-left">
+                <a class="btn btn-link" href="/index/" role="button">返回主页<br><br></a>
+            </div>
+            <div class="pull-right">
+                {% if mysource_flag %}
+                <a class="btn btn-link" href="/source/list/" role="button">返回资源列表<br><br></a>
+                {% else %}
+                <a class="btn btn-link" href="/source/mysource_list/" role="button">查看我的上传<br><br></a>
+                {% endif%}
+                
+                <a class="btn btn-link" href="/index/" role="button">上传资源<br><br></a>
+            </div>
+
             <table class ="table table-hover">
                 <thead>
                     <tr>
@@ -14,6 +27,9 @@
                         <th>上传者</th>
                         <th>下载次数</th>
                         <th>点击下载</th>
+                        {% if mysource_flag %}
+                        <th>删除</th>
+                        {% endif%}
                     </tr>
                 </thead>
                 <tbody>
@@ -28,7 +44,13 @@
                             <ul>
                                 <a class="btn btn-default btn-xs" href="{% url 'download' f.id  %}" role="button">点我</a>
                             </ul>
-             
+                        </td>
+                        <td>
+                            {% if mysource_flag %}
+                            <ul>
+                                <a class="btn btn-default btn-xs" href="{% url 'deletesource' f.id  %}" role="button">点我</a>
+                            </ul>
+                            {% endif%}
                         </td>
                     </tr>
                     {% endfor %}

@@ -2,6 +2,8 @@ from django.shortcuts import render,redirect
 from .forms import UploadForm
 from . import models
 from django.http import HttpResponse, FileResponse
+from user.models import Teacher,Student
+import os
 
 def upload(request):
     if not request.session.get('is_login', None):
@@ -45,9 +47,49 @@ def sourcelist(request):
         # 没有登录
         return redirect("/index/")
 
-    files = models.FileInfo.objects.all()
-    file_list = []
+    # 不能再一下子打出所有课程的资源
+    user_id = request.session['user_id']
+    user = Teacher.objects.filter(ID = user_id)
+    if not user:
+        user = Student.objects.filter(ID = user_id)
+
+    course = user[0].course.split(',')
+    l_files = []
     
+    for c in course:
+        files = models.FileInfo.objects.filter(course_id = c)
+        l_files.extend(files)
+    file_list = []
+
+    for f in l_files:
+        file_info = {
+            "filename":f.file_name,
+            "remarks":f.remarks,
+            "uploader_id": f.uploader_id,
+            "file_info": f.file_info,
+            "course":f.course.name,
+            "download_times":f.download_times,
+            "id":f.id
+        }
+        file_list.append(file_info)
+    return render(request, 'source/list.html', locals())
+
+def mysource_list(request):
+    if not request.session.get('is_login', None):
+        # 没有登录
+        return redirect("/index/")
+
+    # 不能再一下子打出所有课程的资源
+    mysource_flag = True
+    user_id = request.session['user_id']
+    user = Teacher.objects.filter(ID = user_id)
+    if not user:
+        user = Student.objects.filter(ID = user_id)
+    user_name = user[0].name
+    
+    files = models.FileInfo.objects.filter(uploader_id = user_name)
+
+    file_list = []
     for f in files:
         file_info = {
             "filename":f.file_name,
@@ -58,11 +100,21 @@ def sourcelist(request):
             "download_times":f.download_times,
             "id":f.id
         }
-        print("id:")
-        print(type(f.id))
         file_list.append(file_info)
     return render(request, 'source/list.html', locals())
 
+def deletesource(request,id):
+    f = models.FileInfo.objects.filter(id = id)
+    file_name = f[0].file_info.name
+    
+    print("id")
+    # 然后将其从数据库中删掉
+    file_path = "media/"+file_name
+    if os.path.exists(file_path):
+        os.remove(file_path)
+    f.delete()
+    
+    return redirect('/source/mysource_list/')
 
 def download(request,id):
     f = models.FileInfo.objects.get(id = id)
