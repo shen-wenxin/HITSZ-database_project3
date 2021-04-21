@@ -1,4 +1,4 @@
-{% extends 'base.html' %}
+{% extends 'source/base.html' %}
 {% load static %}
 {% block title %}文件列表{% endblock %}
 {% block content %}
@@ -15,7 +15,7 @@
                 <a class="btn btn-link" href="/source/mysource_list/" role="button">查看我的上传<br><br></a>
                 {% endif%}
                 
-                <a class="btn btn-link" href="/index/" role="button">上传资源<br><br></a>
+                <a class="btn btn-link" href="/source/upload/" role="button">上传资源<br><br></a>
             </div>
 
             <table class ="table table-hover">

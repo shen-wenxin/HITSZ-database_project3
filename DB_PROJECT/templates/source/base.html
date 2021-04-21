@@ -31,15 +31,16 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="#">Mysite</a>
+          <a class="navbar-brand" href="#">课程资源管理</a>
         </div>
 
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse " id="my-nav">
           <ul class="nav navbar-nav">
-            <li class="active"><a href="/index/">主页</a></li>
+            <li ><a href="/index/">主页</a></li>
             <li ><a href="/course/mycourse">课程</a></li>
-            <li ><a href="/source/list/">资源</a></li>
+            <li class="active"><a href="/source/list/">资源</a></li>
+            <li ><a href="/message/recieve_message/">私信</a></li>
           </ul>
           <ul class="nav navbar-nav navbar-right">
               {% if request.session.is_login %}

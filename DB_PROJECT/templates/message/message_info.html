@@ -1,20 +1,20 @@
-{% extends 'base.html' %}
+{% extends 'message/base.html' %}
 {% load static %}
 {% block title %}私信详情{% endblock %}
 {% block css %}<link href="{% static 'css/message_info.css' %}" rel="stylesheet"/>{% endblock %}
 {% block content %}
     <div class="container">
-        {% if msg_info%}
-        <h2 class = text-center> <br><br>一封来自{{msg_info.sender}}的信 <br></h2> 
+        {% if sorted_old_msgs%}
+        <h2 class = text-center> <br><br>和{{msg_info.sender}}的聊天框 <br></h2> 
 
         <div class="text-right">
-            <a class="btn btn-link" href="/recieve_message/" role="button">返回私信列表</a>
-            <a class="btn btn-link" href="/send_message/" role="button">回复</a>
-            <a class="btn btn-link" href="{% url 'delete_message'  msg_info.id  %}" role="button">残忍删除</a>
+            <a class="btn btn-link" href="/message/recieve_message/" role="button">返回私信列表<br><br></a>
+            <a class="btn btn-link" href="/message/send_message/" role="button">回复<br><br></a>
+            <!-- <a class="btn btn-link" href="{% url 'delete_message'  msg_info.id  %}" role="button">残忍删除<br></a> -->
         </div>
         {% else %}
         <h2 class = text-center> <br><br><br><br>这里什么也没有了…… <br><br><br><br></h2>
-        <a class="btn btn-link" href="/recieve_message/" role="button">返回私信列表</a>
+        <a class="btn btn-link" href="/message/recieve_message/" role="button">返回私信列表</a>
         {% endif%}
         
             
@@ -23,11 +23,31 @@
 
     <div class="container">
        
-        {% if msg_info%}
-        <h4> <br><br>主题：{{msg_info.theme}} <br></h4> 
-        <h4>  <br>内容：{{msg_info.text}} <br></h4> 
-        {% endif%}
+        {% if sorted_old_msgs%}
+        {% for m in sorted_old_msgs%}
+        <div class="media">
+            <div class="media-left">
+              <a href="#">
+                <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
+              </a>
+            </div>
+            <div class="media-body">
+              <h4 class="media-heading">
+                  {{m.sender}}
+              </h4>
+              <h5>
+                <B>{{m.theme}}</B>:{{m.text}}<br>
+                <h5 class = text-right>
+                   -- {{m.send_time}}<br><br><br>
 
+                </h5>
+              </h5>
+                
+            </div>
+          </div>
+        {% endfor    %}
+        {% endif %}
+ 
     </div> 
 
 

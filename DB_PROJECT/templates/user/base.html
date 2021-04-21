@@ -35,13 +35,12 @@
         </div>
 
         <!-- Collect the nav links, forms, and other content for toggling -->
-        <div class="collapse navbar-collapse" id="my-nav">
+        <div class="collapse navbar-collapse " id="my-nav">
           <ul class="nav navbar-nav">
             <li class="active"><a href="/index/">主页</a></li>
             <li ><a href="/course/mycourse">课程</a></li>
             <li ><a href="/source/list/">资源</a></li>
-
-
+            <li ><a href="/message/recieve_message/">私信<span class="badge">{{request.session.message_num}}</span></a></li>
           </ul>
           <ul class="nav navbar-nav navbar-right">
               {% if request.session.is_login %}

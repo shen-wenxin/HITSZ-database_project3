@@ -1,4 +1,4 @@
-{% extends 'base.html' %}
+{% extends 'message/base.html' %}
 {% load static %}
 {% block title %}私信列表{% endblock %}
 {% block css %}<link href="{% static 'css/list.css' %}" rel="stylesheet"/>{% endblock %}
@@ -6,7 +6,7 @@
     <div class="container">
             <h1 class="text-center">已发送<br></h1>
             <div class="text-right">
-                <a class="btn btn-link" href="/recieve_message/" role="button">看看我收到的私信<br><br></a>
+                <a class="btn btn-link" href="/message/recieve_message/" role="button">看看我收到的私信<br><br></a>
             </div>
             <table class ="table table-hover">
                 <thead>

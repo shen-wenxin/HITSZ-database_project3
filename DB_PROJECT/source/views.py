@@ -4,40 +4,45 @@ from . import models
 from django.http import HttpResponse, FileResponse
 from user.models import Teacher,Student
 import os
+from course.models import Course
+
+def get_user_name(request,id):
+    user = Teacher.objects.filter(ID = id)
+    if not user:
+        user = Student.objects.filter(ID = id)
+    user_name = user[0].name
+    return user_name
 
 def upload(request):
     if not request.session.get('is_login', None):
-        print("get here0")
         return redirect("/index/")
     if request.method == 'POST':
         file_form = UploadForm(request.POST, request.FILES)
+        file_form.fields['course'].choices = get_course_gender(request)
         if file_form.is_valid():
-            course_id = file_form.cleaned_data['course_id']
+            course_id = file_form.cleaned_data['course']
+
             remarks = file_form.cleaned_data['remark']
             file_info = file_form.cleaned_data['file_info']
 
-            course = models.CourseInfo.objects.filter(course_id=course_id)
-            if course:
-                uploader_id = request.session['user_id']
-                if not uploader_id:
-                    return redirect("/index/")
-                new_file = models.FileInfo.objects.create(
-                    course_id=course_id,
-                    uploader_id=uploader_id,
-                    file_name = file_info.name,
-                    remarks = remarks,
-                    file_info = file_info
-                    )
-                message = "上传成功"
-                new_file.save()
-                
-                return render(request, 'source/upload.html', locals())
-            else:
-                # 找不到这门课
-                message = "有点东西不对…检查一下课程id…"
-                return render(request, 'source/upload.html', locals())
-
+            course = models.Course.objects.filter(course_id=course_id)
+            uploader_id = request.session['user_id']
+            if not uploader_id:
+                return redirect("/index/")
+            new_file = models.FileInfo.objects.create(
+                course_id=course_id,
+                uploader_id=get_user_name(request,uploader_id),
+                file_name = file_info.name,
+                remarks = remarks,
+                file_info = file_info
+                )
+            message = "上传成功"
+            new_file.save()
+            
+            return render(request, 'source/upload.html', locals())
     file_form = UploadForm()
+    file_form.course_list = get_course_gender(request)
+    file_form.fields['course'].choices = get_course_gender(request)
     return render(request, 'source/upload.html', locals())
 
 
@@ -113,7 +118,7 @@ def deletesource(request,id):
     if os.path.exists(file_path):
         os.remove(file_path)
     f.delete()
-    
+
     return redirect('/source/mysource_list/')
 
 def download(request,id):
@@ -125,5 +130,19 @@ def download(request,id):
     response['Content-Type'] = 'application/octet-stream'
     return response
 
+def get_course_gender(request):
+    user_id = request.session['user_id']
+    user = Teacher.objects.filter(ID = user_id)
+    if not user:
+        user = Student.objects.filter(ID = user_id)
+    course_id = user[0].course.split(',')
+    choise_list = []
+    for id in course_id:
+        course = Course.objects.filter(course_id = id)
+        if course:
+            gender = [(course[0].course_id,course[0].name)]
+            choise_list = choise_list+gender
+
+    return choise_list
 
             

@@ -26,15 +26,8 @@ urlpatterns = [
     path('index/',index),
     path('source/',include('source.urls')),
     path('source/deletesource/<int:id>',deletesource, name='deletesource'),
-
-    
-    path('download/<int:id>',download, name='download'),
-    path('send_message/',send_message, name='send_message'),
-    path('recieve_message/',recieve_message, name='recieve_message'),
-    path('message_info/<int:id>',message_info, name='message_info'),
-    path('delete_message/<int:id>',delete_message,name='delete_message'),
-    path('delete_message_send/<int:id>',delete_message_send,name='delete_message_send'),
-    path('sended_message/',sended_message,name='delete_message'),
+    path('source/download/<int:id>',download, name='download'),
+    path('message/',include('sendmessage.urls')),
     path('course/',include('course.urls'))
 
     

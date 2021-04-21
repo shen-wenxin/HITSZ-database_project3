@@ -6,6 +6,14 @@ from user.models import UserStudent,UserTeacher
 
 
 
+def get_user_name(request,id):
+    student = UserStudent.objects.filter(user_id=id)
+    if student:
+        sender_name = student[0].name
+    else:
+        teacher = UserTeacher.objects.filter(user_id=id)
+        sender_name = teacher[0].name
+    return sender_name
 
 
 
@@ -61,12 +69,7 @@ def recieve_message(request):
     
     msgs_list = []
     for msg in msgs:
-        student = UserStudent.objects.filter(user_id=msg.sender_id)
-        if student:
-            sender_name = student[0].name
-        else:
-            teacher = UserTeacher.objects.filter(user_id=msg.sender_id)
-            sender_name = teacher[0].name
+        sender_name = get_user_name(request,msg.sender_id)
         if msg.read_flag :
             read = "已读"
         else:
@@ -80,7 +83,8 @@ def recieve_message(request):
             "id":msg.id
         }
         msgs_list.append(msg_info)
-    print(msgs_list)
+    msgs_list.reverse()
+
     return render(request, 'message/recieve_message.html', locals())
 
 
@@ -106,41 +110,52 @@ def message_info(request,id):
     else:
         teacher_re = UserTeacher.objects.filter(user_id=reciever_id)
         reciever_name = teacher_re[0].name
-    # # 从系统里加载历史对话信息
-    # old_msgs_list = []
+    # 从系统里加载历史对话信息
+    old_msgs_list = []
     
-    # old_msgs = models.MessageInfo.objects.filter(sender_id=msg.sender_id, reciever_id = reciever_id)
-    # for om in old_msgs:
-    #     om_info = {
-    #         "send_time":om.send_time,
-    #         "sender_id":msg.sender_id,
-    #         "theme":om.theme,
-    #         "text":om.text
-    #     }
-    #     old_msgs_list.append(om_info)
-    # if msg.sender_id != reciever_id:
-    #     old_msgs = models.MessageInfo.objects.filter(sender_id=reciever_id, reciever_id = msg.sender_id)
-    #     for om in old_msgs:
-    #         om_info = {
-    #             "send_time":om.send_time,
-    #             "sender_id":reciever_id,
-    #             "theme":om.theme,
-    #             "text":om.text
-    #         }
-    #         old_msgs_list.append(om_info)
-    # sorted_old_msgs=sorted(old_msgs_list, key= lambda st : st['send_time'])
-    # print(sorted_old_msgs)
+    old_msgs = models.MessageInfo.objects.filter(sender_id=msg.sender_id, reciever_id = reciever_id, reciever_delete = False)
+    for om in old_msgs:
+        om_info = {
+            "send_time":om.send_time,
+            "sender_id":msg.sender_id,
+            "theme":om.theme,
+            "text":om.text,
+            "sender":sender_name+"("+msg.sender_id+")",
+            "reciever":reciever_name +"("+reciever_id+")",
+            "reciever_id":reciever_id,
+            "id":id
+
+        }
+        old_msgs_list.append(om_info)
+    if msg.sender_id != reciever_id:
+        old_msgs = models.MessageInfo.objects.filter(sender_id=reciever_id, reciever_id = msg.sender_id, sender_delete = False)
+        for om in old_msgs:
+            om_info = {
+                "send_time":om.send_time,
+                "sender_id":reciever_id,
+                "theme":om.theme,
+                "text":om.text,
+                "sender":reciever_name + "("+reciever_id+")",
+                "reciever": sender_name + "("+msg.sender_id+")",
+                "reciever_id":msg.sender_id,
+                "id":id,
+            }
+            old_msgs_list.append(om_info)
+    sorted_old_msgs=sorted(old_msgs_list, key= lambda st : st['send_time'])
+    sorted_old_msgs.reverse()
 
     msg_info = {
             "sender_id":msg.sender_id,
             "send_time":msg.send_time,
-            "sender":sender_name,
-            "reciever":reciever_name,
+            "sender":sender_name + "("+msg.sender_id+")",
+            "reciever":reciever_name + "("+reciever_id+")",
             "theme": msg.theme,
             "text":msg.text,
             "reciever_id":reciever_id,
             "id":id
     }
+
+    
     return render(request, 'message/message_info.html', locals())
 
 
@@ -149,13 +164,13 @@ def delete_message(request,id):
     obj = models.MessageInfo.objects.filter(reciever_delete = True,sender_delete = True).delete()
 
     
-    return redirect('/recieve_message/')
+    return redirect('/message/recieve_message/')
 
 def delete_message_send(request,id):
     obj = models.MessageInfo.objects.filter(id = id).update(sender_delete = True)
     obj = models.MessageInfo.objects.filter(reciever_delete = True,sender_delete = True).delete()
     print("get here")
-    return redirect('/sended_message/')
+    return redirect('/message/sended_message/')
 
 
 def sended_message(request):

@@ -13,7 +13,6 @@ def mycourse(request):
     identity = UserStudent.objects.filter(user_id = request.session['user_id'])
     
     if not identity:
-        print("get here")
         message_teacher = "新建课程"
         identity = UserTeacher.objects.filter(user_id = request.session['user_id'])
     course_list = identity[0].identity.course.split(',')

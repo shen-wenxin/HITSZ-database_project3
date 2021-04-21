@@ -1,9 +1,9 @@
-{% extends 'base.html' %}
+{% extends 'message/base.html' %}
 
 {% block title %}发送私信{% endblock %}
 {% block content %}
     <div class="container">
-        <form class='form-send-message' action="/send_message/" method="post">
+        <form class='form-send-message' action="/message/send_message/" method="post">
 
             {% if message %}
                 <div class="alert alert-warning">{{ message }}</div>
@@ -13,8 +13,8 @@
         <h2 class = text-center> <br>一封给{{reciever_name}}的信 <br></h2> 
 
         <div class="text-right">
-            <a class="btn btn-link" href="/recieve_message/" role="button">返回私信列表</a>
-            <a class="btn btn-link" href="/send_message/" role="button">再来一封</a>
+            <a class="btn btn-link" href="/message/recieve_message/" role="button">返回私信列表</a>
+            <a class="btn btn-link" href="/message/send_message/" role="button">再来一封</a>
         </div>
             <h4> <br><br>主题：{{new_message.theme}} <br></h4> 
             <h4>  <br>内容：{{new_message.text}} <br></h4> 

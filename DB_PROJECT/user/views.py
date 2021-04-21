@@ -1,7 +1,7 @@
 from django.shortcuts import render,redirect
 from .forms import UserForm,RegisterForm
 from . import models
-
+from sendmessage.models import MessageInfo
 def index(request):
     # 主页
     
@@ -79,6 +79,11 @@ def register(request):
     register_form = RegisterForm()
     return render(request, 'user/register.html', locals())
     
+def get_message_num(request,id):
+    msgs = models.MessageInfo.objects.filter(reciever_id=id,reciever_delete=False,read_flag = Flase)
+    nums = msgs.count()
+    print("nums = {}".format(nums))
+    return nums
 
 def login(request):
     if request.session.get('is_login',None):
@@ -107,6 +112,7 @@ def login(request):
                     request.session['is_login']=True
                     request.session['user_id']=user_student.user_id
                     request.session['user_name']=user_student.name
+                    # request.session['message_num'] = get_message_num(request,user_student.user_id)
                     return redirect("/index/")
                 else:
                     print("[DEBUG][POST][STATE]:密码不正确")
@@ -125,6 +131,7 @@ def login(request):
                         request.session['is_login']=True
                         request.session['user_id']=user_teacher.user_id
                         request.session['user_name']=user_teacher.name
+                        # request.session['message_num'] = get_message_num(request,user_teacher.user_id)
                         return redirect('/index/')
                     else:
                         print("[DEBUG][POST][STATE]:密码不正确")

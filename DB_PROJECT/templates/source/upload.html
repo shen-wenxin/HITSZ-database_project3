@@ -5,25 +5,29 @@
 {% block content %}
     <div class="container">
         <div class="col-md-4 col-md-offset-4">
-          <form class='form-upload' action="/upload/" method="post" enctype="multipart/form-data">
+          <form class='form-upload' action="/source/upload/" method="post" enctype="multipart/form-data">
 
               {% if message %}
                   <div class="alert alert-warning">{{ message }}</div>
               {% endif %}
               {% csrf_token %}
-              <h2 class="text-center">上传文件</h2>
+              <h2 class="text-center"><br>上传文件<br><br></h2>
+              {{ file_form.course.label_tag }}
+              <select class="form-control" id="courseSelect" name="course">
+                
+                {% for key in file_form.course %}
+                {{key}}
+                {% endfor %}
+            </select>
               <div class="form-group">
-                {{ file_form.course_id.label_tag }}
-                {{ file_form.course_id}}
-              </div>
-              <div class="form-group">
-                {{ file_form.remark.label_tag }}
+                <br>{{ file_form.remark.label_tag }}
                 {{ file_form.remark}}
               </div>
               <div class="form-group">
-                  {{ file_form.file_info.label_tag }}
+                {{ file_form.file_info.label_tag }}
                   {{ file_form.file_info}}
-                </div>
+              </div>
+
               <button type="reset" class="btn btn-default pull-left">重置</button>
               <button type="submit" class="btn btn-primary pull-right">提交</button>
 

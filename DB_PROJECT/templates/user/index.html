@@ -1,11 +1,11 @@
-{% extends 'base.html' %}
+{% extends 'user/base.html' %}
 {% block title %}主页{% endblock %}
 {% block content %}
     {% if request.session.is_login %}
     <h2 class=text-center><br><br><br><br><br><br><br><br>你好,{{ request.session.user_name }}！欢迎回来！<br><br>
         <a class="btn btn-link" href="/course/mycourse" role="button">我的课程<br></a>
         <a class="btn btn-link" href="/source/list/" role="button">资源管理</a>
-        <a class="btn btn-link" href="/recieve_message/" role="button">私信管理</a>
+        <a class="btn btn-link" href="/message/recieve_message/" role="button">私信管理</a>
     </h2>
         
 
