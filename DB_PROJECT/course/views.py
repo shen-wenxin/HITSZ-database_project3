@@ -52,15 +52,12 @@ def course_source(request,id):
 
     
     for f in source_list:
-        uploader = UserStudent.objects.filter(user_id = f.uploader_id)
 
-        if not uploader:
-            uploader = UserTeacher.objects.filter(user_id = f.uploader_id)
         file_info = {
             "uploade_time":f.upload_time,
             "filename":f.file_name,
             "remarks":f.remarks,
-            "uploader_id": uploader[0].name,
+            "uploader_id": f.uploader_id,
             "file_info": f.file_info,
             "course":f.course.name,
             "download_times":f.download_times,

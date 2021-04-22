@@ -34,11 +34,12 @@
                         <td class=text-center>{{c.id}}</td>
                         <td class=text-center>{{c.name}}</td>
                         <td class=text-center>{{c.teacher}}</td>
-                        <td class=text-center><a class="btn btn-link" href="{% url 'course_source' c.id  %}" role="button">资源下载<br><br></a></td>
+                        <td class=text-center><a href="{% url 'course_source' c.id  %}">资源下载</a></td>
+                        
                         {% if message_teacher %}
-                        <td class=text-center><a class="btn btn-link" href="{% url 'course_deteils' c.id  %}" role="button">课程修改<br><br></a></td>
+                        <td class=text-center><a  href="{% url 'course_deteils' c.id  %}" >课程修改</a></td>
                         {% if c.teacher_num != 1 %}
-                        <td class=text-center><a class="btn btn-link" href="{% url 'quit_course' c.id  %}" role="button">退出<br><br></a></td>
+                        <td class=text-center><a  href="{% url 'quit_course' c.id  %}" >退出</a></td>
                         {% endif %}
                         {% endif %}
                             

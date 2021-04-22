@@ -27,10 +27,10 @@
                         <td class = text-center>{{f.uploade_time}}</td>
                         <td class = text-center>{{f.filename}}</td>
                         <td class = text-center>{{f.remarks}}</td>
-                        <td class = text-center>{{f.download_times}}</td>
+                        <td class = text-center>{{f.uploader_id}}</td>
                         <td class = text-center>{{f.file}}</td>
                         <td class = text-center>
-                                <a class="btn  btn-link" href="{% url 'download' f.id  %}" role="button">点我</a>
+                                <a  href="{% url 'download' f.id  %}" >点我</a>
                         </td>
                     </tr>
                     {% endfor %}

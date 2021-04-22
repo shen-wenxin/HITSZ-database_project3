@@ -1,0 +1,39 @@
+{% extends 'user/base.html' %}
+{% load static %}
+{% block title %}教师名录{% endblock %}
+
+{% block content %}
+    <div class="container">
+            <h1 class="text-center">教师名录<br></h1>
+            {% if message %}
+                  <div class="alert alert-warning">{{ message }}</div>
+              {% endif %}
+            <div class="text-right">
+                <a class="btn btn-link" href="/index/" role="button">返回首页<br><br></a>
+                <a class="btn btn-link" href="/user_info_student/" role="button">学生名录<br><br></a>
+            </div>
+            <table class ="table table-hover">
+                <thead>
+                    <tr>
+                        <th class=text-center>教职工号</th>
+                        <th class=text-center>教师姓名</th>
+                        <th class=text-center>所属学院</th>
+                        <th class=text-center>职位</th>
+
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for c in teacher_user %}
+                    <tr>
+                        <td class=text-center>{{c.ID}}</td>
+                        <td class=text-center>{{c.name}}</td>
+                        <td class=text-center>{{c.departments}}</td>
+                        <td class=text-center>{{c.job}}</td>
+                            
+
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+    </div> 
+{% endblock %}

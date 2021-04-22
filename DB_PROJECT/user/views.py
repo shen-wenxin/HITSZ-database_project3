@@ -142,6 +142,7 @@ def login(request):
         return render(request, 'user/login.html', locals())
     login_form = UserForm()
     return render(request, 'user/login.html', locals())
+    
 
 
 
@@ -173,3 +174,20 @@ def logout(request):
     # del request.session['user_id']
     # del request.session['user_name']
     return redirect("/index/")
+
+def user_info_teacher(request):
+    if not request.session.get('is_login', None):
+    # 如果本来就未登录，也就没有登出一说
+        return redirect("/index/")
+    # 获取系统里所有的老师
+    teacher_user = models.Teacher.objects.filter()
+    return render(request, 'user/user_info_teacher.html', locals())
+
+def user_info_student(request):
+    if not request.session.get('is_login', None):
+    # 如果本来就未登录，也就没有登出一说
+        return redirect("/index/")
+    # 获取系统里所有的老师
+    teacher_user = models.Student.objects.filter()
+    return render(request, 'user/user_info_student.html', locals())
+

@@ -3,7 +3,11 @@
 {% block title %}文件列表{% endblock %}
 {% block content %}
     <div class="container">
+        {% if mysource_flag %}
+            <h1 class="text-center"><br>我的上传<br></h1>
+            {% else %}
             <h1 class="text-center"><br>资源管理<br></h1>
+            {% endif%}
 
             <div class="pull-left">
                 <a class="btn btn-link" href="/index/" role="button">返回主页<br><br></a>
@@ -21,37 +25,33 @@
             <table class ="table table-hover">
                 <thead>
                     <tr>
-                        <th>课程名</th>
-                        <th>资源名</th>
-                        <th>备注</th>
-                        <th>上传者</th>
-                        <th>下载次数</th>
-                        <th>点击下载</th>
+                        <th class = text-center>课程名</th>
+                        <th class = text-center>资源名</th>
+                        <th class = text-center>备注</th>
+                        <th class = text-center>上传者</th>
+                        <th class = text-center>下载次数</th>
+                        <th class = text-center>点击下载</th>
                         {% if mysource_flag %}
-                        <th>删除</th>
+                        <th class = text-center>删除</th>
                         {% endif%}
                     </tr>
                 </thead>
                 <tbody>
                     {% for f in file_list %}
                     <tr>
-                        <td>{{f.course}}</td>
-                        <td>{{f.filename}}</td>
-                        <td>{{f.remarks}}</td>
-                        <td>{{f.uploader_id}}</td>
-                        <td>{{f.download_times}}</td>
-                        <td>
-                            <ul>
-                                <a class="btn btn-default btn-xs" href="{% url 'download' f.id  %}" role="button">点我</a>
-                            </ul>
+                        <td class = text-center>{{f.course}}</td>
+                        <td class = text-center>{{f.filename}}</td>
+                        <td class = text-center>{{f.remarks}}</td>
+                        <td class = text-center>{{f.uploader_id}}</td>
+                        <td class = text-center> {{f.download_times}}</td>
+                        <td class = text-center>
+                                <a href="{% url 'download' f.id  %}" >点我</a>
                         </td>
-                        <td>
-                            {% if mysource_flag %}
-                            <ul>
-                                <a class="btn btn-default btn-xs" href="{% url 'deletesource' f.id  %}" role="button">点我</a>
-                            </ul>
-                            {% endif%}
+                        {% if mysource_flag %}
+                        <td class = text-center>
+                                <a  href="{% url 'deletesource' f.id  %}" >点我</a>
                         </td>
+                        {% endif%}
                     </tr>
                     {% endfor %}
                 </tbody>

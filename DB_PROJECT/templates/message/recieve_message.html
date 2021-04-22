@@ -11,33 +11,30 @@
             <table class ="table table-hover">
                 <thead>
                     <tr>
-                        <th>状态</th>
-                        <th>发送时间</th>
-                        <th>发送者</th>
-                        <th>主题</th>
-                        <th>内容</th>
-                        <th>查看详细内容</th>
-                        <th>删除</th>
+                        <th class = text-center>状态</th>
+                        <th class = text-center>发送时间</th>
+                        <th class = text-center>发送者</th>
+                        <th class = text-center>主题</th>
+                        <th class = text-center>内容</th>
+                        <th class = text-center>查看详细内容</th>
+                        <th class = text-center>删除</th>
 
                     </tr>
                 </thead>
                 <tbody>
                     {% for m in msgs_list %}
                     <tr>
-                        <td>{{m.read}}</td>
-                        <td>{{m.send_time}}</td>
-                        <td>{{m.sender}}</td>
-                        <td>{{m.theme}}</td>
-                        <td>{{m.read}}</td>
-                        <td>
-                            <ul>
+                        <td class = text-center>{{m.read}}</td>
+                        <td class = text-center>{{m.send_time}}</td>
+                        <td class = text-center>{{m.sender}}</td>
+                        <td class = text-center>{{m.theme}}</td>
+                        <td class = text-center>{{m.read}}</td>
+                        <td class = text-center>
                                 <a class="btn btn-success" href="{% url 'message_info' m.id  %}" role="button">点我看看</a>
-                            </ul>
                         </td>
-                        <td>
-                            <ul>
+                        <td class = text-center>
+                            
                                 <a class="btn btn-danger" href="{% url 'delete_message' m.id  %}" role="button">删除</a>
-                            </ul>
                         </td>
  
                     </tr>

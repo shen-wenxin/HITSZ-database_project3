@@ -15,7 +15,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path,include
-from user.views import register,login,index,logout
+from user.views import register,login,index,logout,user_info_teacher,user_info_student
 from source.views import upload,sourcelist,download,deletesource
 from sendmessage.views import send_message,recieve_message,message_info,delete_message,sended_message,delete_message_send
 urlpatterns = [
@@ -24,6 +24,8 @@ urlpatterns = [
     path('login/',login),
     path('logout/',logout),
     path('index/',index),
+    path('user_info_teacher/',user_info_teacher),
+    path('user_info_student/',user_info_student),
     path('source/',include('source.urls')),
     path('source/deletesource/<int:id>',deletesource, name='deletesource'),
     path('source/download/<int:id>',download, name='download'),

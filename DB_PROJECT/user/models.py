@@ -57,7 +57,7 @@ class Teacher(models.Model):
 # 学生
 class Student(models.Model):
     
-    ID = models.TextField('学生编号', max_length=20, primary_key=True,null=False)
+    ID = models.TextField('学生编号', max_length=20, primary_key=True,null=False,db_index = True)
     name = models.CharField('学生姓名', max_length=20, null=False)
     ofclass = models.ForeignKey(Class,on_delete=models.CASCADE)
     course = models.TextField('所学课程', max_length=500,null=False,default = " ")
@@ -70,11 +70,11 @@ class Student(models.Model):
     def __str__(self):
         return self.name
 
-# 用户-学生
+# 用户-教师
 class UserTeacher(models.Model):
-    user_id = models.TextField('用户id', max_length=20, primary_key=True,null=False)
+    user_id = models.TextField('用户id', max_length=20, primary_key=True,null=False,db_index = True)
     identity = models.ForeignKey(Teacher,on_delete=models.CASCADE)
-    name = models.TextField('用户姓名', max_length=20, null=False,unique=True)  
+    name = models.TextField('用户姓名', max_length=20, null=False,unique=True,db_index = True)  
     state = models.IntegerField(choices=[(0,'离线'),(1,'在线')],default=0)
     password = models.CharField('密码', max_length=256)
     email = models.EmailField('邮箱', unique=True)
@@ -91,7 +91,8 @@ class UserTeacher(models.Model):
 
 # 用户-学生
 class UserStudent(models.Model):
-    user_id = models.TextField('用户id', max_length=20, primary_key=True,null=False)
+    user_id = models.TextField('用户id', max_length=20, primary_key=True,null=False,db_index = True)
+    # ForeignKey 连 Student表
     identity = models.ForeignKey(Student,on_delete=models.CASCADE)
     name = models.TextField('用户姓名', max_length=20, null=False,unique=True)  
     state = models.IntegerField(choices=[(0,'离线'),(1,'在线')],default=0)
