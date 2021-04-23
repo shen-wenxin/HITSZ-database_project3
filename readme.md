@@ -29,6 +29,7 @@
 2、命令行输入：
 
 ``python manage.py runserver``
+3、浏览器：http://127.0.0.1:8000/index/
 
 ## 4 API
 
